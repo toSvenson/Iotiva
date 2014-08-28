@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iotiva", "Iotiva\Iotiva.csproj", "{E49A8CDB-84A3-4A11-9E0C-1E05F5523A09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iotiva.Models", "Iotiva.Models\Iotiva.Models.csproj", "{A00B69C1-885B-4A0A-885D-B91EE431BDCB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{8D14135B-75E4-4793-8636-0576FD9F6440}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E49A8CDB-84A3-4A11-9E0C-1E05F5523A09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E49A8CDB-84A3-4A11-9E0C-1E05F5523A09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E49A8CDB-84A3-4A11-9E0C-1E05F5523A09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E49A8CDB-84A3-4A11-9E0C-1E05F5523A09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A00B69C1-885B-4A0A-885D-B91EE431BDCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A00B69C1-885B-4A0A-885D-B91EE431BDCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A00B69C1-885B-4A0A-885D-B91EE431BDCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A00B69C1-885B-4A0A-885D-B91EE431BDCB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

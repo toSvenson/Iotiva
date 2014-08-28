@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "BrowserTest";
+}
+
+@section bodyheader
+{
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Examples</h1>
+            <p class="lead">Some examples showing the most basic functionality</p>
+           
+                <button type="button" class="btn btn-default" onclick="ResetUI();">Reset Examples</button>
+           
+        </div>
+    </div>
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>A Simple Thing</h4>
+    </div>
+    <div class="panel-body">
+        <p>A Thing is created by sending a simple set of named values over to Iotiva. There are no required fields (although there are a couple of standard properties)</p>
+        <p>Here we will send the following data over</p>
+
+        <div style="background-color:white">
+            <script src="https://gist.github.com/mlafleur/9f67b882323aba488ea2.js"></script>
+</div>
+            <button type="button" class="btn btn-block btn-primary" onclick="SimpleThing();">Make Some Thing</button>
+            <div id="simpleResults" class="result-box"></div>
+        </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Browser Thing</h4>
+    </div>
+    <div class="panel-body">
+        <p>Here we will send over the following information</p>
+        <table class="table">
+            <thead>
+                <tr><td>Property</td><td>Value</td></tr>
+            </thead>
+            <tbody id="field-body"></tbody>
+        </table>
+        <button type="button" class="btn btn-block btn-primary" onclick="sendtest();">Send Browser Data</button>
+            <div id="result" class="result-box"></div>
+</div>
+</div>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Recently Updated Things</h4>
+    </div>
+    <div class="panel-body">
+        <button type="button" class="btn btn-block btn-primary" onclick="RecentUpdates();">Retrieve Recent Updates</button>
+            <div id="recentResults" class="result-box"></div>
+</div>
+</div>
+
+@section scripts
+{
+    <script>
+        function RecentUpdates()
+        {
+            ResetUI();
+            
+            $.getJSON('../api/things', function (data)
+            {
+                var str = JSON.stringify(data, undefined, 2); // indentation level = 2
+                $('#recentResults').append('<pre>' + str + '</pre>');
+            });
+        }
+
+        function SimpleThing()
+        {
+            var thingData = {
+                Prop1: 'Some interesting property value',
+                Prop2: 'Another interesting property value'
+            };
+            $.post('../api/thing', thingData, function (data, status)
+            {
+                var str = JSON.stringify(data, undefined, 2); // indentation level = 2
+                $('#simpleResults').append('<pre>' + str + '</pre>');
+            });
+        }
+
+        function ResetUI()
+        {
+            $('.result-box').html('');
+        }
+
+        $(document).ready(function ()
+        {
+            ResetUI();
+            $('#field-body').append('<tr><td>Browser</td><td>' + $.browser.name + '</td></tr>');
+            $('#field-body').append('<tr><td>Platform</td><td>' + $.browser.platform + '</td></tr>');
+            $('#field-body').append('<tr><td>Version</td><td>' + $.browser.version + '</td></tr>');
+            $('#field-body').append('<tr><td>Language</td><td>' + navigator.language + '</td></tr>');
+            $('#field-body').append('<tr><td>UserAgent</td><td>' + navigator.userAgent + '</td></tr>');
+            $('#field-body').append('<tr><td>CPU</td><td>' + navigator.cpuClass + '</td></tr>');
+        });
+
+        function getsome()
+        {
+            $('#testButton').disabled = true;
+
+            $.getJSON('../api/thing', function (data)
+            {
+              
+                var str = JSON.stringify(data, undefined, 2); // indentation level = 2
+                $('#result').html('<h4>Result:</h4>');
+                $('#result').append('<pre>' + str + '</pre>');
+            });
+        }
+
+        function sendtest()
+        {
+            $('#testButton').disabled = true;
+
+            var data = {
+                Browser: $.browser.name,
+                Platform: $.browser.platform,
+                Version: $.browser.version,
+                Language: navigator.language,
+                UserAgent: navigator.userAgent,
+                CPU: navigator.cpuClass
+            };
+
+            $.post('../api/thing', data, function (data)
+            {
+                var str = JSON.stringify(data, undefined, 2); // indentation level = 2
+                $('#result').html('<h4>Result:</h4>');
+                $('#result').append('<pre>' + str + '</pre>');
+                $('#testButton').disabled = false;
+            });
+
+        }
+    </script>
+}
