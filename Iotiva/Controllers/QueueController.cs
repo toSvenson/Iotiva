@@ -41,7 +41,7 @@ namespace Iotiva.Controllers
             string queueName = "events";
             if (User.Identity.IsAuthenticated)
             {
-                queueName = "events" + User.Identity.GetUserId();
+                queueName = "events" + Lib.UserUtils.GetUser(this).RepoId;
             }
             var eventQueue = queueClient.GetQueueReference(queueName);
             eventQueue.CreateIfNotExists();
@@ -53,7 +53,7 @@ namespace Iotiva.Controllers
             var eventMessages = new List<EventModel>();
             foreach (var message in messages)
             {
-                var eventMessage = EventModel.FromRowKey(User.Identity.GetUserId(), message.AsString); // Find the message content
+                var eventMessage = EventModel.FromRowKey(Lib.UserUtils.GetUser(this).RepoId, message.AsString); // Find the message content
                 if (eventMessage != null) eventMessages.Add(eventMessage); // If it exists, add it to the return set
                 eventQueue.DeleteMessage(message); // Remove from the queue                
             }

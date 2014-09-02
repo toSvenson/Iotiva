@@ -35,13 +35,7 @@ namespace Iotiva.Controllers
         public IEnumerable<ThingModel> FindThings(string property, string value)
         {
             if (string.IsNullOrWhiteSpace(property)) throw new HttpResponseException(HttpStatusCode.Forbidden);
-
-            var currentUserId = User.Identity.GetUserId();
-            var manager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();            
-            var currentUser = manager.FindById(User.Identity.GetUserId());
-            currentUser.TestProp = "SomeTest";
-            manager.Update(currentUser);
-            return ThingModel.FromPropertyValue(User.Identity.GetUserId(), property, value);
+            return ThingModel.FromPropertyValue(Lib.UserUtils.GetUser(this).RepoId, property, value);
         }
 
         /// <summary>
@@ -52,12 +46,14 @@ namespace Iotiva.Controllers
         [HttpGet]
         public IEnumerable<ThingModel> GetThings()
         {
-            if (string.IsNullOrEmpty(User.Identity.GetUserId()))
+            var user = Lib.UserUtils.GetUser(this);
+
+            if (string.IsNullOrEmpty(user.RepoId))
             {
-                var things = ThingModel.FromPartition(User.Identity.GetUserId());
+                var things = ThingModel.FromPartition(user.RepoId);
                 return things.OrderByDescending(c => c.Timestamp.DateTime).Take(20);
             }
-            return ThingModel.FromPartition(User.Identity.GetUserId());
+            return ThingModel.FromPartition(user.RepoId);
         }
 
         #endregion Collections - api/things
@@ -74,7 +70,7 @@ namespace Iotiva.Controllers
         {
             try
             {
-                var thing = ThingModel.FromRowKey(User.Identity.GetUserId(), id);
+                var thing = ThingModel.FromRowKey(Lib.UserUtils.GetUser(this).RepoId, id);
                 thing.Delete();
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
@@ -95,7 +91,7 @@ namespace Iotiva.Controllers
         {
             try
             {
-                return ThingModel.FromRowKey(User.Identity.GetUserId(), id);
+                return ThingModel.FromRowKey(Lib.UserUtils.GetUser(this).RepoId, id);
             }
             catch
             {
@@ -117,7 +113,7 @@ namespace Iotiva.Controllers
              * and return the results. */
             var dataSet = form.ReadAsNameValueCollection();
             dataSet["id"] = id;
-            return ThingModel.FromNameValueCollection(User.Identity.GetUserId(), dataSet, true);
+            return ThingModel.FromNameValueCollection(Lib.UserUtils.GetUser(this).RepoId, dataSet, true);
         }
 
         /// <summary>
@@ -129,7 +125,7 @@ namespace Iotiva.Controllers
         [HttpPost]
         public ThingModel UpdateThing([FromBody] FormDataCollection form)
         {
-            return ThingModel.FromNameValueCollection(User.Identity.GetUserId(), form.ReadAsNameValueCollection(), true);
+            return ThingModel.FromNameValueCollection(Lib.UserUtils.GetUser(this).RepoId, form.ReadAsNameValueCollection(), true);
         }
 
         #endregion Single Objects - api/thing
@@ -147,7 +143,7 @@ namespace Iotiva.Controllers
         {
             try
             {
-                var thing = ThingModel.FromRowKey(User.Identity.GetUserId(), id);
+                var thing = ThingModel.FromRowKey(Lib.UserUtils.GetUser(this).RepoId, id);
                 var eventModel = new EventModel(thing, EventType.Message);
                 eventModel["EventMessage"] = message.Content.ReadAsStringAsync().Result;
 
@@ -177,7 +173,7 @@ namespace Iotiva.Controllers
         {
             try
             {
-                var thing = ThingModel.FromRowKey(User.Identity.GetUserId(), id);
+                var thing = ThingModel.FromRowKey(Lib.UserUtils.GetUser(this).RepoId, id);
                 var eventModel = new EventModel(thing, EventType.Message);
                 eventModel["EventMessage"] = message;
 

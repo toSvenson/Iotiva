@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using AccidentalFish.AspNet.Identity.Azure;
+using System.Net.Http;
+
 
 namespace Iotiva.Models
 {
@@ -17,19 +19,19 @@ namespace Iotiva.Models
             return userIdentity;
         }
 
-        public string TestProp { get; set; }
-    }
+        private string _repoId;
 
-    //public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-    //{
-    //    public ApplicationDbContext()
-    //        : base("DefaultConnection", throwIfV1Schema: false)
-    //    {
-    //    }
-        
-    //    public static ApplicationDbContext Create()
-    //    {
-    //        return new ApplicationDbContext();
-    //    }
-    //}
+        public string RepoId
+        {
+            get
+            {
+                /// Used to identify the repo for a user. This is used as the partition key for storage. 
+                /// By default we simply use the user's ID (which this will return by default) but 
+                /// allows for multiple user's to potentially share the same repo (under consideration)
+                if (string.IsNullOrWhiteSpace(_repoId)) return this.Id;
+                else return _repoId;
+            }
+            set { _repoId = value; }
+        }
+    }
 }
