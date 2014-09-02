@@ -1,0 +1,1 @@
+﻿Several images used here are provided by FreeRange (http://freerangestock.com/).  License information available at http://freerangestock.com/licensing.php.
