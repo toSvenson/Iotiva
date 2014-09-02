@@ -552,5 +552,57 @@
             <param name="message">The message string to deliver</param>
             <returns></returns>
         </member>
+        <member name="M:Iotiva.Models.Events.EventModel.SendToStorage">
+            <summary>
+            Delivers the message to a Azure Storage Queue. This is the default and simplest of the 
+            queue methods supported. It is consumed via the /api/queue REST method. 
+            </summary>
+        </member>
+        <member name="M:Iotiva.Models.Events.EventModel.SendToTopic">
+            <summary>
+            Delivers the message to an Azure Service Bus Topic. This is the most versatile 
+            of all the methods and the best method for working with more than one listener (i.e. one message to many recipients)
+            </summary>
+        </member>
+        <member name="M:Iotiva.Models.Events.EventModel.SendToQueue">
+            <summary>
+            Delivers the message to an Azure Service Bus Queue. This is similar to the Storage Queue but results in 
+            a lot less HTTP traffic.
+            </summary>
+        </member>
+        <member name="T:Iotiva.Models.Things.ThingModel">
+            <summary>
+            Represents a Thing and it's various properties.
+            </summary>
+        </member>
+        <member name="P:Iotiva.Models.Things.ThingModel.Agent">
+            <summary>
+            Name or Id of the external "agent" responsible for this Thing (optional)
+            Agents are typically a central control unit or HUB with a local connection to the individual Thing. 
+            For example, in a Home Automation scenario the Thing might be a light switch and it's Agent 
+            would be it's controller. In most cases an Agent is a software package running locally which connects
+            Iotiva to Things that otherwise would not be aware of Iotiva. 
+            </summary>
+        </member>
+        <member name="P:Iotiva.Models.Things.ThingModel.Description">
+            <summary>
+            Description of the Thing (optional)
+            </summary>
+        </member>
+        <member name="P:Iotiva.Models.Things.ThingModel.Id">
+            <summary>
+            Unique identifier (Required)
+            </summary>
+        </member>
+        <member name="P:Iotiva.Models.Things.ThingModel.Name">
+            <summary>
+            Common/Display Name (option)
+            </summary>
+        </member>
+        <member name="P:Iotiva.Models.Things.ThingModel.Properties">
+            <summary>
+            An ad-hoc collection of properties for a Thing (option)
+            </summary>
+        </member>
     </members>
 </doc>

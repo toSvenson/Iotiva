@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity;
 using Iotiva.Models;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure;
+using Iotiva.Models.Events;
 
 namespace Iotiva.Controllers
 {

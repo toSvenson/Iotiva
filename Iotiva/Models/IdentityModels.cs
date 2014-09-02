@@ -16,6 +16,8 @@ namespace Iotiva.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public string TestProp { get; set; }
     }
 
     //public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

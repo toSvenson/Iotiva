@@ -1,4 +1,5 @@
 ﻿using Iotiva.Models;
+using Iotiva.Models.Events;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,8 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Microsoft.AspNet.Identity.Owin;
+using Iotiva.Models.Things;
 
 namespace Iotiva.Controllers
 {
@@ -32,6 +35,12 @@ namespace Iotiva.Controllers
         public IEnumerable<ThingModel> FindThings(string property, string value)
         {
             if (string.IsNullOrWhiteSpace(property)) throw new HttpResponseException(HttpStatusCode.Forbidden);
+
+            var currentUserId = User.Identity.GetUserId();
+            var manager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();            
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            currentUser.TestProp = "SomeTest";
+            manager.Update(currentUser);
             return ThingModel.FromPropertyValue(User.Identity.GetUserId(), property, value);
         }
 
@@ -139,7 +148,7 @@ namespace Iotiva.Controllers
             try
             {
                 var thing = ThingModel.FromRowKey(User.Identity.GetUserId(), id);
-                var eventModel = new Iotiva.Models.EventModel(thing, EventType.Message);
+                var eventModel = new EventModel(thing, EventType.Message);
                 eventModel["EventMessage"] = message.Content.ReadAsStringAsync().Result;
 
                 foreach (var item in thing.Properties)
@@ -169,7 +178,7 @@ namespace Iotiva.Controllers
             try
             {
                 var thing = ThingModel.FromRowKey(User.Identity.GetUserId(), id);
-                var eventModel = new Iotiva.Models.EventModel(thing, EventType.Message);
+                var eventModel = new EventModel(thing, EventType.Message);
                 eventModel["EventMessage"] = message;
 
                 foreach (var item in thing.Properties)
