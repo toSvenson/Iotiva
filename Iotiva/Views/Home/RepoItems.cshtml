@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Iotiva.Models.Things.ThingModel>
+
+@{
+    ViewBag.Title = "RepoItems";
+}
+
+<h2>Repository</h2>
+
+<div id="target" class="row">
+    @foreach (var item in Model.OrderBy(o=>o.Name).ThenBy(o=>o.Id))
+    {
+        <div id="dialog_@item.Id" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        @if (!string.IsNullOrWhiteSpace(item.Name))
+                        {
+                            <h1 class="text-center" style="overflow:hidden">@item.Name</h1>
+                        }
+                        else
+                        {
+                            <h1 class="text-center" style="overflow:hidden">@item.Id</h1>
+                        }
+
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">                            
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label" for="Id">Id</label>
+                                <div class="col-lg-8" >
+                                    <input style="max-width:none" class="form-control" readonly="readonly" id="Id" type="text" value="@item.Id" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label" for="Name">Name</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" style="max-width:none" id="Name" type="text" value="@item.Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label" for="Description">Description</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" style="max-width:none" id="Description" type="text" value="@item.Description" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label" for="Agent">Agent</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" style="max-width:none" id="Agent" type="text" value="@item.Agent" />
+                                </div>
+                            </div>
+                            @foreach (var prop in item.Properties)
+                            {
+                                <div class="form-group">
+                                    <label class="col-lg-4 control-label" for="@prop.Key">@prop.Key</label>
+                                    <div class="col-lg-8">
+                                        <div contenteditable class="form-control" id="@prop.Key" style="height:auto">@prop.Value.Trim()</div>
+                                    </div>
+                                </div>
+                            }
+
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-md-12">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <a class="btn btn-default col-md-1" style="margin:5px; width:150px;height:150px" href="#" data-toggle="modal" data-target="#dialog_@item.Id">
+            <div style="padding-top:10px">
+                <p>
+                    <i class="fa fa-puzzle-piece fa-4x text-center"></i>
+                </p>
+                @if (!string.IsNullOrWhiteSpace(item.Name))
+                {
+                    <div class="text-center wrapword" style="overflow:hidden; height: 40px; vertical-align: middle">@item.Name</div>
+                }
+                else
+                {
+                    <p class="text-center wrapword" style="overflow:hidden; height: 40px">@item.Id</p>
+                }
+            </div>
+        </a>
+    }
+</div>

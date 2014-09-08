@@ -30,6 +30,21 @@ namespace Iotiva.Lib
             return currentUser;
         }
 
-
+        public static ApplicationUser GetUser(System.Web.Mvc.Controller controller)
+        {
+            var currentUserId = controller.User.Identity.GetUserId();
+            if (string.IsNullOrWhiteSpace(currentUserId))
+            {
+                ApplicationUser emptyUser = new ApplicationUser();
+                emptyUser.Id = string.Empty;
+                emptyUser.RepoId = string.Empty;
+                emptyUser.RowKey = string.Empty;
+                emptyUser.PartitionKey = string.Empty;
+                return emptyUser;
+            }
+            var manager = controller.Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var currentUser = manager.FindById(currentUserId);
+            return currentUser;
+        }
     }
 }
