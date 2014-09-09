@@ -1,8 +1,4 @@
-﻿using Microsoft.ServiceBus;
-using Microsoft.ServiceBus.Messaging;
-using Microsoft.WindowsAzure;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
@@ -38,14 +34,14 @@ namespace Iotiva.Models.Things
             this.PartitionKey = partitionKey;
             this.RowKey = id;
             this.Id = id;
-        }        
+        }
 
         /// <summary>
         /// Name or Id of the external "agent" responsible for this Thing (optional)
-        /// Agents are typically a central control unit or HUB with a local connection to the individual Thing. 
-        /// For example, in a Home Automation scenario the Thing might be a light switch and it's Agent 
+        /// Agents are typically a central control unit or HUB with a local connection to the individual Thing.
+        /// For example, in a Home Automation scenario the Thing might be a light switch and it's Agent
         /// would be it's controller. In most cases an Agent is a software package running locally which connects
-        /// Iotiva to Things that otherwise would not be aware of Iotiva. 
+        /// Iotiva to Things that otherwise would not be aware of Iotiva.
         /// </summary>
         [DataMember]
         public string Agent { get; set; }
@@ -87,6 +83,5 @@ namespace Iotiva.Models.Things
                 return GetProperProperty(key).ToString();
             }
         }
-
     }
 }

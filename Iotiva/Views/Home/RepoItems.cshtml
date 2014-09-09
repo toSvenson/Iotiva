@@ -27,15 +27,11 @@
                         {
                             <h1 class="text-center" style="overflow:hidden">@item.Id</h1>
                         }
-
                     </div>
 
-
-
-                    @*@using (Html.BeginForm("RepoItems", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))*@
-                    @using (Ajax.BeginForm("UpdateItem", "Home", null, new AjaxOptions() { HttpMethod = "POST", UpdateTargetId="result" }, new { @id = "@item.Id", @class = "form-horizontal", role = "form" }))
+                    @using (Ajax.BeginForm("UpdateItem", "Home", null, new AjaxOptions() { HttpMethod = "POST" }, new { @class = "form-horizontal", role = "form" }))
                     {
-                      
+
                         <div class="modal-body">
                             @Html.AntiForgeryToken()
                             <div class="form-group">
@@ -72,21 +68,17 @@
                                     </div>
                                 </div>
                             }
-
-
                         </div>
                         <div class="modal-footer">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Save</button>                                
+                                <button type="submit" class="btn btn-primary">Save</button>
                                 <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
                             </div>
                         </div>
                     }
-
                 </div>
             </div>
         </div>
-
 
         <a class="btn btn-info col-md-1" style="margin:5px; width:150px;height:150px" href="#" data-toggle="modal" data-target="#dialog_@item.Id">
             <div style="padding-top:10px">

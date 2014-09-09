@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Iotiva.Models.Things;
 using System.Web.Mvc;
-using Iotiva.Models.Things;
-using System.Threading.Tasks;
 
 namespace Iotiva.Controllers
 {
-
     public class HomeController : Controller
     {
+        public ActionResult BrowserTest()
+        {
+            ViewBag.Title = "Browser Test";
+            return View();
+        }
+
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
 
-            return View();
-        }
-
-        public ActionResult BrowserTest()
-        {
-            ViewBag.Title = "Browser Test";
             return View();
         }
 
@@ -43,7 +37,5 @@ namespace Iotiva.Controllers
             model.Save();
             return new EmptyResult();
         }
-
-
     }
 }
