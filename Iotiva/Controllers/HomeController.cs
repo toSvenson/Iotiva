@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Iotiva.Models.Things;
+using System.Threading.Tasks;
 
 namespace Iotiva.Controllers
 {
@@ -30,6 +31,19 @@ namespace Iotiva.Controllers
             var user = Lib.UserUtils.GetUser(this);
             return View(ThingModel.FromPartition(user.RepoId));
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateItem(ThingModel model)
+        {
+            var user = Lib.UserUtils.GetUser(this);
+            model.PartitionKey = user.RepoId;
+            model.RowKey = model.Id;
+            model.Save();
+            return new EmptyResult();
+        }
+
 
     }
 }
