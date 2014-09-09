@@ -9,11 +9,11 @@
 
     @Scripts.Render("~/bundles/jqueryval")
 }
-<h2>Repository</h2>
+<h2>Repository (@Model.Count() Things)</h2>
 <div id="result" style="display:none"></div>
 <div id="target" class="row">
-    @foreach (var item in Model.OrderBy(o => o.Name).ThenBy(o => o.Id))
-    {
+    @foreach (var item in Model)
+    {       
         <div id="dialog_@item.Id" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -29,53 +29,25 @@
                         }
                     </div>
 
-                    @using (Ajax.BeginForm("UpdateItem", "Home", null, new AjaxOptions() { HttpMethod = "POST" }, new { @class = "form-horizontal", role = "form" }))
-                    {
-
                         <div class="modal-body">
-                            @Html.AntiForgeryToken()
-                            <div class="form-group">
-                                <label class="col-lg-4 control-label" for="Id">Id</label>
-                                <div class="col-lg-8">
-                                    <input style="max-width:none" class="form-control" readonly="readonly" name="Id" type="text" value="@item.Id" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-4 control-label" for="Name">Name</label>
-                                <div class="col-lg-8">
-                                    <input class="form-control" style="max-width:none" name="Name" type="text" value="@item.Name" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-4 control-label" for="Description">Description</label>
-                                <div class="col-lg-8">
-                                    <input class="form-control" style="max-width:none" name="Description" type="text" value="@item.Description" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-4 control-label" for="Agent">Agent</label>
-                                <div class="col-lg-8">
-                                    <input class="form-control" style="max-width:none" name="Agent" type="text" value="@item.Agent" />
-                                </div>
-                            </div>
-                            @foreach (var prop in item.Properties)
-                            {
-                                <div class="form-group">
-                                    <label class="col-lg-4 control-label" for="@prop.Key">@prop.Key</label>
-                                    <div class="col-lg-8">
-                                        <textarea class="form-control" style="display:none" id="hidden-@item.Id-@prop.Key" name="Properties.@prop.Key">@prop.Value.Trim()</textarea>
-                                        <div contenteditable class="form-control" id="@prop.Key" onblur="$('#hidden-@item.Id-@prop.Key').text($(this).text());" style="height:auto">@prop.Value.Trim()</div>
-                                    </div>
-                                </div>
-                            }
+                            <dl class="dl-horizontal">
+                                <dt>Id</dt><dd>@item.Id</dd>
+                                <dt>Name</dt><dd>@item.Name</dd>
+                                <dt>Description</dt><dd>@item.Description</dd>
+                                <dt>Agent</dt><dd>@item.Agent</dd>
+                                @foreach (var prop in item.Properties)
+                                {
+                                    <dt>@prop.Key</dt><dd>@prop.Value.Trim()</dd>
+                                }
+                            </dl>
                         </div>
                         <div class="modal-footer">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                @Html.ActionLink("Edit", "RepoEdit", new { id = @item.Id }, new { @class="btn btn-primary" })
                                 <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
                             </div>
                         </div>
-                    }
+                    
                 </div>
             </div>
         </div>

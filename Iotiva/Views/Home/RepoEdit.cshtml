@@ -1,0 +1,50 @@
+﻿@model Iotiva.Models.Things.ThingModel
+
+@{
+    ViewBag.Title = "RepoEdit";
+}
+
+<h2>Edit @Model.Id</h2>
+
+@using (Html.BeginForm("UpdateItem", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label class="col-sm-4 col-md-2 control-label" for="Id">Id</label>
+        <div class="col-sm-8 col-md-10">
+            <input class="form-control" readonly="readonly" name="Id" type="text" value="@Model.Id" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 col-md-2 control-label" for="Name">Name</label>
+        <div class="col-sm-8 col-md-10">
+            <input class="form-control" name="Name" type="text" value="@Model.Name" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 col-md-2 control-label" for="Description">Description</label>
+        <div class="col-sm-8 col-md-10">
+            <input class="form-control" name="Description" type="text" value="@Model.Description" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 col-md-2 control-label" for="Agent">Agent</label>
+        <div class="col-sm-8 col-md-10">
+            <input class="form-control" name="Agent" type="text" value="@Model.Agent" />
+        </div>
+    </div>
+    foreach (var prop in Model.Properties)
+    {
+        <div class="form-group">
+            <label class="col-sm-4 col-md-2 control-label" for="@prop.Key">@prop.Key</label>
+            <div class="col-sm-8 col-md-10">
+                <textarea class="form-control" style="display:none" id="hidden-@Model.Id-@prop.Key" name="Properties.@prop.Key">@prop.Value.Trim()</textarea>
+                <div contenteditable class="form-control" id="@prop.Key" onblur="$('#hidden-@Model.Id-@prop.Key').text($(this).text());" style="max-width:280px; height:auto">@prop.Value.Trim()</div>
+            </div>
+        </div>
+    }
+    <div class="">
+        <button type="submit" class="btn btn-primary  ">Save</button>
+        @Html.ActionLink("Cancel", "RepoItems", "Home", new { @class="btn btn-default"})
+    </div>
+}

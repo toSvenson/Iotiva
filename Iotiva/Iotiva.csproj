@@ -378,6 +378,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\BrowserTest.cshtml" />
     <Content Include="Views\Home\RepoItems.cshtml" />
+    <Content Include="Views\Home\RepoEdit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

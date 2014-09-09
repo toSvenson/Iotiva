@@ -4,6 +4,7 @@ using Microsoft.WindowsAzure.Storage.Table;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using Iotiva.Models.Events;
+using System.Linq;
 
 namespace Iotiva.Models.Things
 {
@@ -61,7 +62,7 @@ namespace Iotiva.Models.Things
         {
             TableQuery<ThingModel> query = new TableQuery<ThingModel>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey));
             var results = ThingTable.ExecuteQuery(query);
-            return results;
+            return results.OrderBy(o=>o.Title);
         }
 
         public static IEnumerable<ThingModel> FromPropertyValue(string partitionKey, string property, string value)
@@ -71,7 +72,7 @@ namespace Iotiva.Models.Things
             string combined = TableQuery.CombineFilters(filterA, TableOperators.And, filterB);
             TableQuery<ThingModel> query = new TableQuery<ThingModel>().Where(combined); 
             var results = ThingTable.ExecuteQuery(query);
-            return results;
+            return results.OrderBy(o => o.Title);
         }
 
         public static ThingModel FromRowKey(string partitionKey, string rowKey)

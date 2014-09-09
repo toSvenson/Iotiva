@@ -64,6 +64,15 @@ namespace Iotiva.Models.Things
         [DataMember]
         public string Name { get; set; }
 
+        public string Title
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(Name)) return Id;
+                else return Name;
+            }
+        }
+
         /// <summary>
         /// An ad-hoc collection of properties for a Thing (option)
         /// </summary>

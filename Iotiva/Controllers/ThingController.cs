@@ -48,12 +48,12 @@ namespace Iotiva.Controllers
         {
             var user = Lib.UserUtils.GetUser(this);
 
+            var things = ThingModel.FromPartition(user.RepoId);
+
             if (string.IsNullOrEmpty(user.RepoId))
-            {
-                var things = ThingModel.FromPartition(user.RepoId);
                 return things.OrderByDescending(c => c.Timestamp.DateTime).Take(20);
-            }
-            return ThingModel.FromPartition(user.RepoId);
+
+            return things;
         }
 
         #endregion Collections - api/things

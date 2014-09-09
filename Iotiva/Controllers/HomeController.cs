@@ -1,5 +1,6 @@
 ﻿using Iotiva.Models.Things;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace Iotiva.Controllers
 {
@@ -23,7 +24,23 @@ namespace Iotiva.Controllers
             ViewBag.Title = "Repository";
 
             var user = Lib.UserUtils.GetUser(this);
-            return View(ThingModel.FromPartition(user.RepoId));
+
+            var things = ThingModel.FromPartition(user.RepoId);
+            //if (string.IsNullOrEmpty(user.RepoId))
+            //    return View(things.OrderByDescending(c => c.Timestamp.DateTime).Take(20));
+            //else
+                return View(things);
+        }
+
+        public ActionResult RepoEdit(string id)
+        {
+            ViewBag.Title = "Edit - " + id;
+            var user = Lib.UserUtils.GetUser(this);
+            var thing = ThingModel.FromRowKey(user.RepoId, id);
+            if (thing != null) 
+                return View(thing);
+            else
+                return RedirectToAction("RepoItems", "Home");
         }
 
         [HttpPost]
@@ -35,7 +52,7 @@ namespace Iotiva.Controllers
             model.PartitionKey = user.RepoId;
             model.RowKey = model.Id;
             model.Save();
-            return new EmptyResult();
+            return RedirectToAction("RepoItems", "Home");
         }
     }
 }
