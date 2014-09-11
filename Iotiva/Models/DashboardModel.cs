@@ -16,7 +16,7 @@ namespace Iotiva.Models
         public DashboardModel(string repoId)
         {
             var things = Things.ThingModel.FromPartition(repoId);
-            RecentUpdates = things.OrderByDescending(c => c.Timestamp).Take(6).ToList();
+            RecentUpdates = things.OrderByDescending(c => c.Timestamp).Take(8).ToList();
 
             ThingCount = Things.ThingModel.RepositoryCount(repoId);
             EventCount = Events.EventModel.EventCount(repoId);
