@@ -52,3 +52,10 @@
     Iotiva is under development so please understand that while we strive to keep things as stable and secure as possible, <strong>this cake is not baked</strong> just yet.
     I expect plenty of changes to the API as larger workloads are tested and new issues discovered.
 </div>
+
+<div id="target" class="row">
+    @foreach (var item in Model.RecentUpdates)
+    {
+        Html.RenderPartial("_QuickThing", item);
+    }
+</div>

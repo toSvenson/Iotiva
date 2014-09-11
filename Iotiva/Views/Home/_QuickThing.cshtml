@@ -1,0 +1,69 @@
+﻿@model Iotiva.Models.Things.ThingModel
+
+<div id="dialog_@Model.Id" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                @if (!string.IsNullOrWhiteSpace(Model.Name))
+                {
+                    <h1 class="text-center" style="overflow:hidden">@Model.Name</h1>
+                }
+                else
+                {
+                    <h1 class="text-center" style="overflow:hidden">@Model.Id</h1>
+                }
+            </div>
+
+            <div class="modal-body">
+                <dl class="dl-horizontal">
+                    <dt>Id</dt>
+                    <dd>@Model.Id</dd>
+                    @if (!string.IsNullOrWhiteSpace(Model.Name))
+                    {
+                        <dt>Name</dt>
+                        <dd>@Model.Name</dd>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.Agent))
+                    {
+                        <dt>Agent</dt>
+                        <dd>@Model.Agent</dd>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.Type))
+                    {
+                        <dt>Type</dt>
+                        <dd>@Model.Type</dd>
+                    }
+                    @foreach (var prop in Model.Properties)
+                    {
+                        <dt>@prop.Key</dt>
+                        <dd>@prop.Value.Trim()</dd>
+                    }
+                </dl>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    @Html.ActionLink("Edit", "RepoEdit", new { id = @Model.Id }, new { @class = "btn btn-primary" })
+                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<a class="btn btn-info col-md-1" style="margin:5px; width:150px;height:150px" href="#" data-toggle="modal" data-target="#dialog_@Model.Id">
+    <div style="padding-top:10px">
+        <p>
+            <i class="fa fa fa-info-circle fa-4x text-center"></i>
+        </p>
+        @if (!string.IsNullOrWhiteSpace(Model.Name))
+        {
+            <p class="text-center wrapword" style="overflow:hidden; height: 40px; vertical-align: middle">@Model.Name</p>
+        }
+        else
+        {
+            <p class="text-center wrapword" style="overflow:hidden; height: 40px">@Model.Id</p>
+        }
+    </div>
+</a>

@@ -380,6 +380,7 @@
     <Content Include="Views\Home\BrowserTest.cshtml" />
     <Content Include="Views\Home\RepoItems.cshtml" />
     <Content Include="Views\Home\RepoEdit.cshtml" />
+    <Content Include="Views\Home\_QuickThing.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
