@@ -10,6 +10,22 @@ namespace Iotiva.Models.Events
 {
     public partial class EventModel
     {
+        public static int EventCount(string partitionKey)
+        {
+            var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            var tableClient = storageAccount.CreateCloudTableClient();
+            var eventsTable = tableClient.GetTableReference("events");
+
+            TableQuery query = new TableQuery().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey)).Select(new string[] { "RowKey" });
+            int i = 0;
+            foreach (DynamicTableEntity entity in eventsTable.ExecuteQuery(query))
+            {
+
+                i++;
+            }
+            return i;
+        }
+
         public static EventModel FromRowKey(string partitionKey, string rowKey)
         {
             var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
@@ -37,6 +53,9 @@ namespace Iotiva.Models.Events
             var eventType = EventProperties["EventType"];
             if(string.IsNullOrWhiteSpace(eventType)) return; // Without an event type we don't notify
 
+            // Save the event to Storage. For some queue items we'll point back to this
+            // but it is valuable for analytics either way
+            this.Save();
 
             // Check to see if we should send queue events for changes to things or not
             var notifyOnChange = CloudConfigurationManager.GetSetting("NotifyOnChange");
@@ -92,7 +111,7 @@ namespace Iotiva.Models.Events
              * them into the queue. To deal with this we instead store the event body
              * in a separate table called 'events'. We then only queue up the unique RowKey
              * for the event contents. */
-            this.Save();
+            //this.Save();
 
             /* Add a notification to the storage queue that an event has happened.
              * If this is a public queue we'll put the event in a generic 'events' queue

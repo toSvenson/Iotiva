@@ -13,7 +13,7 @@
 <div id="result" style="display:none"></div>
 <div id="target" class="row">
     @foreach (var item in Model)
-    {       
+    {
         <div id="dialog_@item.Id" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -29,25 +29,39 @@
                         }
                     </div>
 
-                        <div class="modal-body">
-                            <dl class="dl-horizontal">
-                                <dt>Id</dt><dd>@item.Id</dd>
-                                <dt>Name</dt><dd>@item.Name</dd>
-                                <dt>Description</dt><dd>@item.Description</dd>
-                                <dt>Agent</dt><dd>@item.Agent</dd>
-                                @foreach (var prop in item.Properties)
-                                {
-                                    <dt>@prop.Key</dt><dd>@prop.Value.Trim()</dd>
-                                }
-                            </dl>
+                    <div class="modal-body">
+                        <dl class="dl-horizontal">
+                            <dt>Id</dt>
+                            <dd>@item.Id</dd>
+                            @if (!string.IsNullOrWhiteSpace(item.Name))
+                            {
+                                <dt>Name</dt>
+                                <dd>@item.Name</dd>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(item.Agent))
+                            {
+                                <dt>Agent</dt>
+                                <dd>@item.Agent</dd>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(item.Type))
+                            {
+                                <dt>Type</dt>
+                                <dd>@item.Type</dd>
+                            }
+                            @foreach (var prop in item.Properties)
+                            {
+                                <dt>@prop.Key</dt>
+                                <dd>@prop.Value.Trim()</dd>
+                            }
+                        </dl>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-md-12">
+                            @Html.ActionLink("Edit", "RepoEdit", new { id = @item.Id }, new { @class = "btn btn-primary" })
+                            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
                         </div>
-                        <div class="modal-footer">
-                            <div class="col-md-12">
-                                @Html.ActionLink("Edit", "RepoEdit", new { id = @item.Id }, new { @class="btn btn-primary" })
-                                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
-                            </div>
-                        </div>
-                    
+                    </div>
+
                 </div>
             </div>
         </div>

@@ -26,11 +26,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Iotiva", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a class="navbar-brand" href="http://iotiva.com">Iotiva</a>
+                @*@Html.ActionLink("Iotiva", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Dashboard", "Index", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Repository", "RepoItems", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Examples", "BrowserTest", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>

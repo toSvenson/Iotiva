@@ -20,10 +20,10 @@ namespace Iotiva.Models.Things
                 case "name":
                     return Name;
 
-                case "description":
-                    return Description;
-
                 case "agent":
+                    return Agent;
+
+                case "type":
                     return Agent;
 
                 default:
@@ -43,12 +43,13 @@ namespace Iotiva.Models.Things
                     Name = value as string;
                     break;
 
-                case "description":
-                    Description = value as string;
-                    break;
-
+          
                 case "agent":
                     Agent = value as string;
+                    break;
+
+                case "type":
+                    Type = value as string;
                     break;
 
                 default:
@@ -76,9 +77,17 @@ namespace Iotiva.Models.Things
                 results.Add("Id", new Tuple<string, string>(oldThing.Id, newThing.Id));
             }
 
-            if (newThing.Description != oldThing.Description)
+
+            // Agent Change
+            if (newThing.Agent != oldThing.Agent)
             {
-                results.Add("Description", new Tuple<string, string>(oldThing.Description, newThing.Description));
+                results.Add("Agent", new Tuple<string, string>(oldThing.Agent, newThing.Agent));
+            }
+
+            // Type
+            if (newThing.Type != oldThing.Type)
+            {
+                results.Add("Type", new Tuple<string, string>(oldThing.Type, newThing.Type));
             }
 
             var comparer = EqualityComparer<string>.Default;

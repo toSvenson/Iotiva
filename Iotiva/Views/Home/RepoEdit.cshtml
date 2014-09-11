@@ -21,16 +21,17 @@
             <input class="form-control" name="Name" type="text" value="@Model.Name" />
         </div>
     </div>
-    <div class="form-group">
-        <label class="col-sm-4 col-md-2 control-label" for="Description">Description</label>
-        <div class="col-sm-8 col-md-10">
-            <input class="form-control" name="Description" type="text" value="@Model.Description" />
-        </div>
-    </div>
+    
     <div class="form-group">
         <label class="col-sm-4 col-md-2 control-label" for="Agent">Agent</label>
         <div class="col-sm-8 col-md-10">
             <input class="form-control" name="Agent" type="text" value="@Model.Agent" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 col-md-2 control-label" for="Agent">Type</label>
+        <div class="col-sm-8 col-md-10">
+            <input class="form-control" name="Agent" type="text" value="@Model.Type" />
         </div>
     </div>
     foreach (var prop in Model.Properties)

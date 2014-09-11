@@ -36,7 +36,7 @@ namespace Iotiva.Models.Things
             // Manually add the non-property bag properties we track
             _entities.Add("Id", new EntityProperty(Id));
             _entities.Add("Name", new EntityProperty(Name));
-            _entities.Add("Description", new EntityProperty(Description));
+            _entities.Add("Type", new EntityProperty(Type));
             _entities.Add("Agent", new EntityProperty(Agent));
 
             return _entities;

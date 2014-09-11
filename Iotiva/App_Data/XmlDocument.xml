@@ -584,11 +584,6 @@
             Iotiva to Things that otherwise would not be aware of Iotiva.
             </summary>
         </member>
-        <member name="P:Iotiva.Models.Things.ThingModel.Description">
-            <summary>
-            Description of the Thing (optional)
-            </summary>
-        </member>
         <member name="P:Iotiva.Models.Things.ThingModel.Id">
             <summary>
             Unique identifier (Required)
@@ -597,6 +592,11 @@
         <member name="P:Iotiva.Models.Things.ThingModel.Name">
             <summary>
             Common/Display Name (option)
+            </summary>
+        </member>
+        <member name="P:Iotiva.Models.Things.ThingModel.Type">
+            <summary>
+            Defines a Type of thing (eg. make and model)
             </summary>
         </member>
         <member name="P:Iotiva.Models.Things.ThingModel.Properties">

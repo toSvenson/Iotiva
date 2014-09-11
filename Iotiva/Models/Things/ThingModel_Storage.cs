@@ -27,6 +27,18 @@ namespace Iotiva.Models.Things
             }
         }
 
+        public static int RepositoryCount(string partitionKey)
+        {
+            TableQuery query = new TableQuery().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey)).Select(new string[] { "RowKey" });
+            int i = 0;
+            foreach (DynamicTableEntity entity in ThingTable.ExecuteQuery(query))
+            {
+             
+                i++;
+            }
+            return i;
+        }
+
         public static ThingModel FromNameValueCollection(string partitionKey, NameValueCollection pairs, bool autoSave)
         {
             ThingModel thing;
@@ -62,7 +74,7 @@ namespace Iotiva.Models.Things
         {
             TableQuery<ThingModel> query = new TableQuery<ThingModel>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey));
             var results = ThingTable.ExecuteQuery(query);
-            return results.OrderBy(o=>o.Title);
+            return results.OrderBy(o => o.Title);
         }
 
         public static IEnumerable<ThingModel> FromPropertyValue(string partitionKey, string property, string value)
@@ -70,7 +82,7 @@ namespace Iotiva.Models.Things
             string filterA = TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey);
             string filterB = TableQuery.GenerateFilterCondition(property, QueryComparisons.Equal, value);
             string combined = TableQuery.CombineFilters(filterA, TableOperators.And, filterB);
-            TableQuery<ThingModel> query = new TableQuery<ThingModel>().Where(combined); 
+            TableQuery<ThingModel> query = new TableQuery<ThingModel>().Where(combined);
             var results = ThingTable.ExecuteQuery(query);
             return results.OrderBy(o => o.Title);
         }
@@ -85,7 +97,7 @@ namespace Iotiva.Models.Things
 
         public void Delete()
         {
-            var eventModel = new EventModel(this, EventType.Delete); 
+            var eventModel = new EventModel(this, EventType.Delete);
             var result = ThingTable.Execute(TableOperation.Delete(this));
             eventModel.Send(); // Thing Deleted
         }
@@ -106,7 +118,7 @@ namespace Iotiva.Models.Things
 
 
             // Send events
-            if(previousState == null)
+            if (previousState == null)
             {
                 // Thing Added
                 EventModel eventModel = new EventModel(currentState, EventType.Add);
@@ -125,7 +137,7 @@ namespace Iotiva.Models.Things
                     }
                     eventModel.Send();
                 }
-            }            
+            }
         }
     }
 }

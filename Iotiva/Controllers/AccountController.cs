@@ -45,6 +45,7 @@ namespace Iotiva.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated) return Redirect(returnUrl);
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -63,6 +64,7 @@ namespace Iotiva.Controllers
                 {
                     await SignInAsync(user, model.RememberMe);
                     return RedirectToLocal(returnUrl);
+                  
                 }
                 else
                 {
@@ -532,6 +534,10 @@ namespace Iotiva.Controllers
             if (Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
+            }
+            else if (!string.IsNullOrWhiteSpace(returnUrl))
+            {
+                 return Redirect(returnUrl);
             }
             else
             {

@@ -14,9 +14,10 @@ namespace Iotiva.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
+            ViewBag.Title = "Dashboard";
+            var user = Lib.UserUtils.GetUser(this);
 
-            return View();
+            return View(new Iotiva.Models.DashboardModel(user.RepoId));
         }
 
         public ActionResult RepoItems()

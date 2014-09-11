@@ -1,34 +1,49 @@
-﻿@section bodyheader
+﻿@model Iotiva.Models.DashboardModel
+
+@section bodyheader
 {
     <div class="jumbotron">
         <div class="container">
             <h1>Iotiva</h1>
-            <p class="lead">A cloud scale wiring platform for the network of nouns.</p>
+            <p class="lead">Repository Dashboard</p>
         </div>
     </div>
 }
 
 <div class="row">
     <div class="col-sm-4">
-        <img class="img-circle center-block-xs " src="~/Images/Simple.jpg" style="width: 200px; height: 200px;">
-        <h2 class="center-block-xs">Simple</h2>
-        <p>Iotiva's architecture is unabashedly lean, using a few primitives as possible. We believe a Thing should define itself. We're very Zen like that.</p>
-        <p><a href="#Simple" class="btn btn-default">Learn more</a></p>
-    </div>
-    <div class="col-sm-4">
-        <hr class="visible-xs">
-        <img class="img-circle center-block-xs" src="~/Images/Scalable.jpg" style="width: 200px; height: 200px;">
-        <h2 class="center-block-xs">Scalable</h2>
-        <p>Iotiva is powered by Microsoft Azure providing scalability for an unfathomably large number of Things at scale. Very important if you're planning global domination.</p>
-        <p><a href="#Scalable" class="btn btn-default">Learn more</a></p>
+        <div class="panel panel-info">
+            <div class="panel-heading text-center">
+                <h3>Things</h3>
+            </div>
+            <div class="panel-body text-center">
+                <h1>@Model.ThingCount</h1>
+            </div>
+        </div>
     </div>
 
+
     <div class="col-sm-4">
-        <hr class="visible-xs">
-        <img class="img-circle center-block-xs" src="~/Images/Practical.jpg" style="width: 200px; height: 200px;">
-        <h2 class="center-block-xs">Practical</h2>
-        <p>Iotiva was designed with Makers and Hackers in mind, it's minimal footprint costs less than a Netflix account.</p>
-        <p><a href="#Practical" class="btn btn-default">Learn more</a></p>
+        <div class="panel panel-info">
+            <div class="panel-heading text-center">
+                <h3>Events</h3>
+            </div>
+            <div class="panel-body text-center">
+                <h1>@Model.EventCount</h1>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-sm-4">
+        <div class="panel panel-info">
+            <div class="panel-heading text-center">
+                <h3>Most Recent</h3>
+            </div>
+            <div class="panel-body text-center">
+                <h2>@Model.RecentUpdates[0].Id</h2>
+            </div>
+        </div>
     </div>
 </div>
 <p> </p>
@@ -36,78 +51,4 @@
 <div class="alert alert-warning" role="alert">
     Iotiva is under development so please understand that while we strive to keep things as stable and secure as possible, <strong>this cake is not baked</strong> just yet.
     I expect plenty of changes to the API as larger workloads are tested and new issues discovered.
-</div>
-
-@*<div class="alert alert-info" role="alert">
-        Breaking Change: A recent change to the code has resulted in several API paths being refactored. Most notable is api/thing/ (which returns a set of Things)
-        has been renamed api/things/ (plural). We have also dropped the separate PUT and POST methods for updating a Thing as the distinction created more confusion
-        than anything else. Going forward we will only be using POST. We also moved the api/send/{thing id}?{message method to the more sensible api/thing/{thing id}/send/{message}.
-    </div>*@
-
-<hr class="featurette-divider">
-<a name="Simple" style="position: relative; padding-top: 50px">&#x200B;</a>
-<div class="row featurette">
-    <div class="col-md-9">
-        <h2 class="featurette-heading">Simple<span class="text-muted"> but not simplistic</span></h2>
-        <p class="lead">
-            Iotiva's architecture is unabashedly lean, using a few primitives as possible.
-        </p>
-
-        <p>
-            fundamental design principal was that Things should
-            self-define themselves through the data they share.
-        </p>
-        <p>
-            To this end, Iotiva uses an extremely lean Thing object that contains only the properties that
-            were absolutely required for Iotiva to function. Everything else is stored in a key-value property bag that can be completely unique to each Thing (up to 200 per Thing).
-        </p>
-    </div>
-    <div class="col-md-3 ">
-        <img class="img-responsive img-rounded" style="width: 250px; height: 250px;" src="~/Images/Simple.jpg">
-    </div>
-</div>
-
-<hr class="featurette-divider">
-<a name="Scalable" style="position: relative; padding-top: 50px">&#x200B;</a>
-<div class="row featurette" id="">
-    <div class="col-md-9">
-        <h2 class="featurette-heading">Scalable<span class="text-muted"> without a PhD</span></h2>
-        <p class="lead">
-            Iotiva is powered by Microsoft Azure.
-        </p>
-        <p>
-            Specifically we leverage Azure WebSites, Table Storage and Service Bus. These core services provide multiple inflection points to
-            scale the service.
-        </p>
-        <p>
-            Azure allows Iotiva to maintain high-performance while minimizing the costs; we only need to scale the services to mean the particular load rather than
-            having to spin up entire VM's. It also allows us to handle large bursts of traffic without falling over as the IO capabilities of Tables and Queues are ridiculously large.
-        </p>
-    </div>
-    <div class="col-md-3">
-        <img class="img-responsive img-rounded" style="width: 250px; height: 250px;" src="~/Images/Scalable.jpg" alt="Generic placeholder image">
-    </div>
-</div>
-
-<hr class="featurette-divider">
-<a name="Practical" style="position: relative; padding-top: 50px">&#x200B;</a>
-<div class="row featurette" id="pracinfo">
-    <div class="col-md-9">
-        <h2 class="featurette-heading">Practical<span class="text-muted"> with pizazz</span></h2>
-        <p class="lead">
-            The inspiration for Iotiva came from an discussion with a fellow hacker over the cost of the cloud.
-        </p>
-        <p>
-            The assumption was that the various cloud services (Azure, AWS, etc) were
-            out of reach for the horsiest developer. To test this assumption I deiced to built a small proof of concept to collect data from my various micro-controllers. I placed one constraint on the POC,
-            it must cost less than $20 a month. After a few weeks of tinkering I had a completed POC. Not only had I beat the $20/month constraint, it came in under $10!
-        </p>
-        <p>
-            Over the next few months I continued to refine and redactor my little POC into Iotiva. These refinments continue and will be rolled out continually. I will share a formal road map soon but
-            the near-term will include private repositories (i.e. non-public Things), eventing (allowing for command-and-control of things) and SDK's for a number of languages and platforms (C#, NETMF, Arduino, JavaScript, Node.js, etc.)
-        </p>
-    </div>
-    <div class="col-md-3">
-        <img class="img-responsive img-rounded" style="width: 250px; height: 250px;" src="~/Images/Practical.jpg" alt="Generic placeholder image">
-    </div>
 </div>

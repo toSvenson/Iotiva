@@ -14,10 +14,7 @@ namespace Iotiva.Models.Things
 
         public ThingModel()
         {
-            //Agent = string.Empty;
-            //Description = string.Empty;
             Id = Guid.NewGuid().ToString("N");
-            //Name = string.Empty;
         }
 
         public ThingModel(string partitionKey)
@@ -46,12 +43,7 @@ namespace Iotiva.Models.Things
         [DataMember]
         public string Agent { get; set; }
 
-        /// <summary>
-        /// Description of the Thing (optional)
-        /// </summary>
-        [DataMember]
-        public string Description { get; set; }
-
+      
         /// <summary>
         /// Unique identifier (Required)
         /// </summary>
@@ -63,6 +55,12 @@ namespace Iotiva.Models.Things
         /// </summary>
         [DataMember]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Defines a Type of thing (eg. make and model)
+        /// </summary>
+        [DataMember]
+        public string Type { get; set; }
 
         public string Title
         {
